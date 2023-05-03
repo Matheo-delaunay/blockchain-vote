@@ -67,65 +67,88 @@ contract Voting is Ownable {
         _;
     }
 
+    modifier onlyDuringProposalsRegistration() {
+        require(currentWorkflowStatus == WorkflowStatus.ProposalsRegistrationStarted, "Proposals registration is not active.");
+        _;
+    }
+
     modifier onlyAfterProposalsRegistrationEnded() {
         require(currentWorkflowStatus == WorkflowStatus.ProposalsRegistrationEnded, "Proposals registration is still active.");
         _;
     }
 
-    modifier onlyDuringProposalsRegistration() {
-    require(currentWorkflowStatus == WorkflowStatus.ProposalsRegistrationStarted, "Proposals registration is not active.");
-    _;
-}
-
     // Fonctions d'administration
 
     function registerVoters(address[] memory _voters) public onlyAdmin {
+        // Vérifie que l'état courant du workflow est en cours d'inscription des électeurs.
         require(currentWorkflowStatus == WorkflowStatus.RegisteringVoters, "Cannot register voters at this time.");
+        // Boucle sur la liste des adresses d'électeurs fournie et vérifie que chaque électeur n'est pas déjà enregistré.
         for (uint i = 0; i < _voters.length; i++) {
             require(!voters[_voters[i]].isRegistered, "Voter already registered.");
+            // Enregistre l'électeur comme étant enregistré.
             voters[_voters[i]].isRegistered = true;
+            // Émet un événement pour signaler que l'électeur a été enregistré.
             emit VoterRegistered(_voters[i]);
         }
     }
 
     function startProposalsRegistration() public onlyAdmin {
+        // Vérifie que l'état courant du workflow est en cours d'inscription des électeurs.
         require(currentWorkflowStatus == WorkflowStatus.RegisteringVoters, "Cannot start proposals registration at this time.");
+        // Modifie l'état courant du workflow pour indiquer que l'inscription des propositions a commencé.
         currentWorkflowStatus = WorkflowStatus.ProposalsRegistrationStarted;
+        // Émet un événement pour signaler que l'état du workflow a changé.
         emit WorkflowStatusChange(WorkflowStatus.RegisteringVoters, currentWorkflowStatus);
     }
 
     function endProposalsRegistration() public onlyAdmin {
+        // Vérifie que l'état courant du workflow est en cours d'inscription des propositions.
         require(currentWorkflowStatus == WorkflowStatus.ProposalsRegistrationStarted, "Cannot end proposals registration at this time.");
+        // Modifie l'état courant du workflow pour indiquer que l'inscription des propositions est terminée.
         currentWorkflowStatus = WorkflowStatus.ProposalsRegistrationEnded;
+        // Émet un événement pour signaler que l'état du workflow a changé.
         emit WorkflowStatusChange(WorkflowStatus.ProposalsRegistrationStarted, currentWorkflowStatus);
     }
 
     function startVotingSession() public onlyAdmin {
+        // Vérifie que l'état courant du workflow est l'inscription des propositions terminée.
         require(currentWorkflowStatus == WorkflowStatus.ProposalsRegistrationEnded, "Cannot start voting session at this time.");
+        // Modifie l'état courant du workflow pour indiquer que la session de vote a commencé.
         currentWorkflowStatus = WorkflowStatus.VotingSessionStarted;
+        // Émet un événement pour signaler que l'état du workflow a changé.
         emit WorkflowStatusChange(WorkflowStatus.ProposalsRegistrationEnded, currentWorkflowStatus);
     }
 
     function endVotingSession() public onlyAdmin {
+        // Vérifie que l'état courant du workflow est la session de vote en cours.
         require(currentWorkflowStatus == WorkflowStatus.VotingSessionStarted, "Cannot end voting session at this time.");
+        // Modifie l'état courant du workflow pour indiquer que la session de vote est terminée.
         currentWorkflowStatus = WorkflowStatus.VotingSessionEnded;
+        // Émet un événement pour signaler que l'état du workflow a changé.
         emit WorkflowStatusChange(WorkflowStatus.VotingSessionStarted, currentWorkflowStatus);
     }
 
     function registerProposal(string memory _description) public onlyRegisteredVoter onlyDuringProposalsRegistration {
+        // La fonction permet à un électeur enregistré de proposer une nouvelle proposition pendant la période d'enregistrement des propositions.
         proposals.push(Proposal({
             description: _description,
             voteCount: 0
         }));
+        // Ajouter une nouvelle proposition à la liste des propositions existantes et émettre un événement.
         emit ProposalRegistered(proposals.length - 1);
     }
 
     function vote(uint _proposalId) public onlyRegisteredVoter onlyDuringVotingSession {
+        // Récupère le votant actuel depuis le mapping de votants
         Voter storage voter = voters[msg.sender];
+        // Vérifie si le votant n'a pas déjà voté
         require(!voter.hasVoted, "You have already voted.");
+        // Enregistre le vote et le votant dans les mappings correspondants
         voter.hasVoted = true;
         voter.votedProposalId = _proposalId;
+        // Incrémente le compteur de votes pour la proposition correspondante
         proposals[_proposalId].voteCount++;
+        // Émet un événement pour signaler que le votant a voté pour la proposition correspondante
         emit Voted(msg.sender, _proposalId);
     }
 
