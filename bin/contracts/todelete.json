@@ -1,0 +1,105 @@
+{
+    "contractName": "todelete",
+    "abi": [
+        {
+            "inputs": [],
+            "stateMutability": "nonpayable",
+            "type": "constructor"
+        }
+    ],
+    "metadata": "{\"compiler\":{\"version\":\"0.8.19+commit.7dd6d404\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"c:/Users/teova/OneDrive/Bureau/INFORMATIQUE/L3_IMT_2022_2023/PROJET_CRYPTO/depot_blockchain/blockchain-vote/contracts/todelete.sol\":\"todelete\"},\"evmVersion\":\"paris\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[]},\"sources\":{\"c:/Users/teova/OneDrive/Bureau/INFORMATIQUE/L3_IMT_2022_2023/PROJET_CRYPTO/depot_blockchain/blockchain-vote/contracts/todelete.sol\":{\"keccak256\":\"0x1643d9c08d440688e1661fbb48e0514aafe2398cec249691c90268ac7f2710b7\",\"license\":\"UNLICENSED\",\"urls\":[\"bzz-raw://86f4ca8c7d241a99b497d8a31a748134dd48f1d1cd32ee01fbb5bf7db6f4d71c\",\"dweb:/ipfs/QmYcVmVqBAazqqTKXZ5fAsqUQg6d16oUDyfRzmTJw97wF7\"]}},\"version\":1}",
+    "bytecode": "6080604052348015600f57600080fd5b50603f80601d6000396000f3fe6080604052600080fdfea26469706673582212206060a180943cef5e816c7115fe851da81650ae7e7a5fcfb24e2780c7982def5f64736f6c63430008130033",
+    "deployedBytecode": "6080604052600080fdfea26469706673582212206060a180943cef5e816c7115fe851da81650ae7e7a5fcfb24e2780c7982def5f64736f6c63430008130033",
+    "sourceMap": "67:51:0:-:0;;;92:23;;;;;;;;;;67:51;;;;;;",
+    "deployedSourceMap": "67:51:0:-:0;;;;;",
+    "sourcePath": "c:/Users/teova/OneDrive/Bureau/INFORMATIQUE/L3_IMT_2022_2023/PROJET_CRYPTO/depot_blockchain/blockchain-vote/contracts/todelete.sol",
+    "compiler": {
+        "name": "solc",
+        "version": "0.8.19+commit.7dd6d404"
+    },
+    "ast": {
+        "absolutePath": "c:/Users/teova/OneDrive/Bureau/INFORMATIQUE/L3_IMT_2022_2023/PROJET_CRYPTO/depot_blockchain/blockchain-vote/contracts/todelete.sol",
+        "exportedSymbols": {
+            "todelete": [
+                6
+            ]
+        },
+        "id": 7,
+        "license": "UNLICENSED",
+        "nodeType": "SourceUnit",
+        "nodes": [
+            {
+                "id": 1,
+                "literals": [
+                    "solidity",
+                    "^",
+                    "0.8",
+                    ".0"
+                ],
+                "nodeType": "PragmaDirective",
+                "src": "40:23:0"
+            },
+            {
+                "abstract": false,
+                "baseContracts": [],
+                "canonicalName": "todelete",
+                "contractDependencies": [],
+                "contractKind": "contract",
+                "fullyImplemented": true,
+                "id": 6,
+                "linearizedBaseContracts": [
+                    6
+                ],
+                "name": "todelete",
+                "nameLocation": "76:8:0",
+                "nodeType": "ContractDefinition",
+                "nodes": [
+                    {
+                        "body": {
+                            "id": 4,
+                            "nodeType": "Block",
+                            "src": "105:10:0",
+                            "statements": []
+                        },
+                        "id": 5,
+                        "implemented": true,
+                        "kind": "constructor",
+                        "modifiers": [],
+                        "name": "",
+                        "nameLocation": "-1:-1:-1",
+                        "nodeType": "FunctionDefinition",
+                        "parameters": {
+                            "id": 2,
+                            "nodeType": "ParameterList",
+                            "parameters": [],
+                            "src": "103:2:0"
+                        },
+                        "returnParameters": {
+                            "id": 3,
+                            "nodeType": "ParameterList",
+                            "parameters": [],
+                            "src": "105:0:0"
+                        },
+                        "scope": 6,
+                        "src": "92:23:0",
+                        "stateMutability": "nonpayable",
+                        "virtual": false,
+                        "visibility": "public"
+                    }
+                ],
+                "scope": 7,
+                "src": "67:51:0",
+                "usedErrors": []
+            }
+        ],
+        "src": "40:78:0"
+    },
+    "functionHashes": {},
+    "gasEstimates": {
+        "creation": {
+            "codeDepositCost": "12600",
+            "executionCost": "66",
+            "totalCost": "12666"
+        }
+    }
+}

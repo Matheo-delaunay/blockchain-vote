@@ -1,0 +1,419 @@
+{
+    "contractName": "Voting",
+    "abi": [
+        {
+            "anonymous": false,
+            "inputs": [
+                {
+                    "indexed": true,
+                    "internalType": "address",
+                    "name": "previousOwner",
+                    "type": "address"
+                },
+                {
+                    "indexed": true,
+                    "internalType": "address",
+                    "name": "newOwner",
+                    "type": "address"
+                }
+            ],
+            "name": "OwnershipTransferred",
+            "type": "event"
+        },
+        {
+            "inputs": [],
+            "name": "owner",
+            "outputs": [
+                {
+                    "internalType": "address",
+                    "name": "",
+                    "type": "address"
+                }
+            ],
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "inputs": [],
+            "name": "renounceOwnership",
+            "outputs": [],
+            "stateMutability": "nonpayable",
+            "type": "function"
+        },
+        {
+            "inputs": [
+                {
+                    "internalType": "address",
+                    "name": "newOwner",
+                    "type": "address"
+                }
+            ],
+            "name": "transferOwnership",
+            "outputs": [],
+            "stateMutability": "nonpayable",
+            "type": "function"
+        },
+        {
+            "inputs": [],
+            "name": "winningProposalId",
+            "outputs": [
+                {
+                    "internalType": "uint256",
+                    "name": "",
+                    "type": "uint256"
+                }
+            ],
+            "stateMutability": "view",
+            "type": "function"
+        }
+    ],
+    "metadata": "{\"compiler\":{\"version\":\"0.8.19+commit.7dd6d404\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"previousOwner\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"OwnershipTransferred\",\"type\":\"event\"},{\"inputs\":[],\"name\":\"owner\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"renounceOwnership\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"transferOwnership\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"winningProposalId\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{\"owner()\":{\"details\":\"Returns the address of the current owner.\"},\"renounceOwnership()\":{\"details\":\"Leaves the contract without owner. It will not be possible to call `onlyOwner` functions anymore. Can only be called by the current owner. NOTE: Renouncing ownership will leave the contract without an owner, thereby removing any functionality that is only available to the owner.\"},\"transferOwnership(address)\":{\"details\":\"Transfers ownership of the contract to a new account (`newOwner`). Can only be called by the current owner.\"}},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"c:/Users/teova/OneDrive/Bureau/INFORMATIQUE/L3_IMT_2022_2023/PROJET_CRYPTO/depot_blockchain/blockchain-vote/contracts/Voting.sol\":\"Voting\"},\"evmVersion\":\"paris\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[]},\"sources\":{\"c:/Users/teova/OneDrive/Bureau/INFORMATIQUE/L3_IMT_2022_2023/PROJET_CRYPTO/depot_blockchain/blockchain-vote/contracts/Voting.sol\":{\"keccak256\":\"0x9fa7ff105ad48f1dc79afa8e138a44f73434fe668f65dba639fa239a47754dfe\",\"license\":\"GPL-3.0\",\"urls\":[\"bzz-raw://05b8f22fb2c0d3968d6a60ee485f5761287c300656d75e26685506b1e7c9f838\",\"dweb:/ipfs/QmcfZSWFn3ARCscyEqS7JWyw4ng1ZaxhLEaDCxBapRNktB\"]},\"c:/Users/teova/OneDrive/Bureau/INFORMATIQUE/L3_IMT_2022_2023/PROJET_CRYPTO/depot_blockchain/blockchain-vote/node_modules/@openzeppelin/contracts/access/Ownable.sol\":{\"keccak256\":\"0xa94b34880e3c1b0b931662cb1c09e5dfa6662f31cba80e07c5ee71cd135c9673\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://40fb1b5102468f783961d0af743f91b9980cf66b50d1d12009f6bb1869cea4d2\",\"dweb:/ipfs/QmYqEbJML4jB1GHbzD4cUZDtJg5wVwNm3vDJq1GbyDus8y\"]},\"c:/Users/teova/OneDrive/Bureau/INFORMATIQUE/L3_IMT_2022_2023/PROJET_CRYPTO/depot_blockchain/blockchain-vote/node_modules/@openzeppelin/contracts/utils/Context.sol\":{\"keccak256\":\"0xe2e337e6dde9ef6b680e07338c493ebea1b5fd09b43424112868e9cc1706bca7\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://6df0ddf21ce9f58271bdfaa85cde98b200ef242a05a3f85c2bc10a8294800a92\",\"dweb:/ipfs/QmRK2Y5Yc6BK7tGKkgsgn3aJEQGi5aakeSPZvS65PV8Xp3\"]}},\"version\":1}",
+    "bytecode": "608060405234801561001057600080fd5b5061001a3361001f565b61006f565b600080546001600160a01b038381166001600160a01b0319831681178455604051919092169283917f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e09190a35050565b6102478061007e6000396000f3fe608060405234801561001057600080fd5b506004361061004c5760003560e01c8063715018a6146100515780638da5cb5b1461005b578063c64963c51461007b578063f2fde38b14610092575b600080fd5b6100596100a5565b005b6000546040516001600160a01b0390911681526020015b60405180910390f35b61008460015481565b604051908152602001610072565b6100596100a03660046101e1565b6100b9565b6100ad610137565b6100b76000610191565b565b6100c1610137565b6001600160a01b03811661012b5760405162461bcd60e51b815260206004820152602660248201527f4f776e61626c653a206e6577206f776e657220697320746865207a65726f206160448201526564647265737360d01b60648201526084015b60405180910390fd5b61013481610191565b50565b6000546001600160a01b031633146100b75760405162461bcd60e51b815260206004820181905260248201527f4f776e61626c653a2063616c6c6572206973206e6f7420746865206f776e65726044820152606401610122565b600080546001600160a01b038381166001600160a01b0319831681178455604051919092169283917f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e09190a35050565b6000602082840312156101f357600080fd5b81356001600160a01b038116811461020a57600080fd5b939250505056fea2646970667358221220ca91bee0d547fed73e2b7bafd39fa7f0a7c838d026bacc551d1661007164f4ad64736f6c63430008130033",
+    "deployedBytecode": "608060405234801561001057600080fd5b506004361061004c5760003560e01c8063715018a6146100515780638da5cb5b1461005b578063c64963c51461007b578063f2fde38b14610092575b600080fd5b6100596100a5565b005b6000546040516001600160a01b0390911681526020015b60405180910390f35b61008460015481565b604051908152602001610072565b6100596100a03660046101e1565b6100b9565b6100ad610137565b6100b76000610191565b565b6100c1610137565b6001600160a01b03811661012b5760405162461bcd60e51b815260206004820152602660248201527f4f776e61626c653a206e6577206f776e657220697320746865207a65726f206160448201526564647265737360d01b60648201526084015b60405180910390fd5b61013481610191565b50565b6000546001600160a01b031633146100b75760405162461bcd60e51b815260206004820181905260248201527f4f776e61626c653a2063616c6c6572206973206e6f7420746865206f776e65726044820152606401610122565b600080546001600160a01b038381166001600160a01b0319831681178455604051919092169283917f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e09190a35050565b6000602082840312156101f357600080fd5b81356001600160a01b038116811461020a57600080fd5b939250505056fea2646970667358221220ca91bee0d547fed73e2b7bafd39fa7f0a7c838d026bacc551d1661007164f4ad64736f6c63430008130033",
+    "sourceMap": "242:592:0:-:0;;;;;;;;;;;;-1:-1:-1;936:32:1;719:10:2;936:18:1;:32::i;:::-;242:592:0;;2433:187:1;2506:16;2525:6;;-1:-1:-1;;;;;2541:17:1;;;-1:-1:-1;;;;;;2541:17:1;;;;;;2573:40;;2525:6;;;;;;;2573:40;;2506:16;2573:40;2496:124;2433:187;:::o;242:592:0:-;;;;;;;",
+    "deployedSourceMap": "242:592:0:-:0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;1831:101:1;;;:::i;:::-;;1201:85;1247:7;1273:6;1201:85;;-1:-1:-1;;;;;1273:6:1;;;160:51:3;;148:2;133:18;1201:85:1;;;;;;;;799:29:0;;;;;;;;;368:25:3;;;356:2;341:18;799:29:0;222:177:3;2081:198:1;;;;;;:::i;:::-;;:::i;1831:101::-;1094:13;:11;:13::i;:::-;1895:30:::1;1922:1;1895:18;:30::i;:::-;1831:101::o:0;2081:198::-;1094:13;:11;:13::i;:::-;-1:-1:-1;;;;;2169:22:1;::::1;2161:73;;;::::0;-1:-1:-1;;;2161:73:1;;897:2:3;2161:73:1::1;::::0;::::1;879:21:3::0;936:2;916:18;;;909:30;975:34;955:18;;;948:62;-1:-1:-1;;;1026:18:3;;;1019:36;1072:19;;2161:73:1::1;;;;;;;;;2244:28;2263:8;2244:18;:28::i;:::-;2081:198:::0;:::o;1359:130::-;1247:7;1273:6;-1:-1:-1;;;;;1273:6:1;719:10:2;1422:23:1;1414:68;;;;-1:-1:-1;;;1414:68:1;;1304:2:3;1414:68:1;;;1286:21:3;;;1323:18;;;1316:30;1382:34;1362:18;;;1355:62;1434:18;;1414:68:1;1102:356:3;2433:187:1;2506:16;2525:6;;-1:-1:-1;;;;;2541:17:1;;;-1:-1:-1;;;;;;2541:17:1;;;;;;2573:40;;2525:6;;;;;;;2573:40;;2506:16;2573:40;2496:124;2433:187;:::o;404:286:3:-;463:6;516:2;504:9;495:7;491:23;487:32;484:52;;;532:1;529;522:12;484:52;558:23;;-1:-1:-1;;;;;610:31:3;;600:42;;590:70;;656:1;653;646:12;590:70;679:5;404:286;-1:-1:-1;;;404:286:3:o",
+    "sourcePath": "c:/Users/teova/OneDrive/Bureau/INFORMATIQUE/L3_IMT_2022_2023/PROJET_CRYPTO/depot_blockchain/blockchain-vote/contracts/Voting.sol",
+    "compiler": {
+        "name": "solc",
+        "version": "0.8.19+commit.7dd6d404"
+    },
+    "ast": {
+        "absolutePath": "c:/Users/teova/OneDrive/Bureau/INFORMATIQUE/L3_IMT_2022_2023/PROJET_CRYPTO/depot_blockchain/blockchain-vote/contracts/Voting.sol",
+        "exportedSymbols": {
+            "Context": [
+                161
+            ],
+            "Ownable": [
+                139
+            ],
+            "Voting": [
+                26
+            ]
+        },
+        "id": 27,
+        "license": "GPL-3.0",
+        "nodeType": "SourceUnit",
+        "nodes": [
+            {
+                "id": 1,
+                "literals": [
+                    "solidity",
+                    "^",
+                    "0.8",
+                    ".19"
+                ],
+                "nodeType": "PragmaDirective",
+                "src": "37:24:0"
+            },
+            {
+                "absolutePath": "c:/Users/teova/OneDrive/Bureau/INFORMATIQUE/L3_IMT_2022_2023/PROJET_CRYPTO/depot_blockchain/blockchain-vote/node_modules/@openzeppelin/contracts/access/Ownable.sol",
+                "file": "c:/Users/teova/OneDrive/Bureau/INFORMATIQUE/L3_IMT_2022_2023/PROJET_CRYPTO/depot_blockchain/blockchain-vote/node_modules/@openzeppelin/contracts/access/Ownable.sol",
+                "id": 2,
+                "nameLocation": "-1:-1:-1",
+                "nodeType": "ImportDirective",
+                "scope": 27,
+                "sourceUnit": 140,
+                "src": "65:173:0",
+                "symbolAliases": [],
+                "unitAlias": ""
+            },
+            {
+                "abstract": false,
+                "baseContracts": [
+                    {
+                        "baseName": {
+                            "id": 3,
+                            "name": "Ownable",
+                            "nameLocations": [
+                                "261:7:0"
+                            ],
+                            "nodeType": "IdentifierPath",
+                            "referencedDeclaration": 139,
+                            "src": "261:7:0"
+                        },
+                        "id": 4,
+                        "nodeType": "InheritanceSpecifier",
+                        "src": "261:7:0"
+                    }
+                ],
+                "canonicalName": "Voting",
+                "contractDependencies": [],
+                "contractKind": "contract",
+                "fullyImplemented": true,
+                "id": 26,
+                "linearizedBaseContracts": [
+                    26,
+                    139,
+                    161
+                ],
+                "name": "Voting",
+                "nameLocation": "251:6:0",
+                "nodeType": "ContractDefinition",
+                "nodes": [
+                    {
+                        "canonicalName": "Voting.Voter",
+                        "id": 11,
+                        "members": [
+                            {
+                                "constant": false,
+                                "id": 6,
+                                "mutability": "mutable",
+                                "name": "isRegistered",
+                                "nameLocation": "344:12:0",
+                                "nodeType": "VariableDeclaration",
+                                "scope": 11,
+                                "src": "339:17:0",
+                                "stateVariable": false,
+                                "storageLocation": "default",
+                                "typeDescriptions": {
+                                    "typeIdentifier": "t_bool",
+                                    "typeString": "bool"
+                                },
+                                "typeName": {
+                                    "id": 5,
+                                    "name": "bool",
+                                    "nodeType": "ElementaryTypeName",
+                                    "src": "339:4:0",
+                                    "typeDescriptions": {
+                                        "typeIdentifier": "t_bool",
+                                        "typeString": "bool"
+                                    }
+                                },
+                                "visibility": "internal"
+                            },
+                            {
+                                "constant": false,
+                                "id": 8,
+                                "mutability": "mutable",
+                                "name": "hasVoted",
+                                "nameLocation": "372:8:0",
+                                "nodeType": "VariableDeclaration",
+                                "scope": 11,
+                                "src": "367:13:0",
+                                "stateVariable": false,
+                                "storageLocation": "default",
+                                "typeDescriptions": {
+                                    "typeIdentifier": "t_bool",
+                                    "typeString": "bool"
+                                },
+                                "typeName": {
+                                    "id": 7,
+                                    "name": "bool",
+                                    "nodeType": "ElementaryTypeName",
+                                    "src": "367:4:0",
+                                    "typeDescriptions": {
+                                        "typeIdentifier": "t_bool",
+                                        "typeString": "bool"
+                                    }
+                                },
+                                "visibility": "internal"
+                            },
+                            {
+                                "constant": false,
+                                "id": 10,
+                                "mutability": "mutable",
+                                "name": "votedProposalId",
+                                "nameLocation": "396:15:0",
+                                "nodeType": "VariableDeclaration",
+                                "scope": 11,
+                                "src": "391:20:0",
+                                "stateVariable": false,
+                                "storageLocation": "default",
+                                "typeDescriptions": {
+                                    "typeIdentifier": "t_uint256",
+                                    "typeString": "uint256"
+                                },
+                                "typeName": {
+                                    "id": 9,
+                                    "name": "uint",
+                                    "nodeType": "ElementaryTypeName",
+                                    "src": "391:4:0",
+                                    "typeDescriptions": {
+                                        "typeIdentifier": "t_uint256",
+                                        "typeString": "uint256"
+                                    }
+                                },
+                                "visibility": "internal"
+                            }
+                        ],
+                        "name": "Voter",
+                        "nameLocation": "322:5:0",
+                        "nodeType": "StructDefinition",
+                        "scope": 26,
+                        "src": "315:104:0",
+                        "visibility": "public"
+                    },
+                    {
+                        "canonicalName": "Voting.Proposal",
+                        "id": 16,
+                        "members": [
+                            {
+                                "constant": false,
+                                "id": 13,
+                                "mutability": "mutable",
+                                "name": "description",
+                                "nameLocation": "465:11:0",
+                                "nodeType": "VariableDeclaration",
+                                "scope": 16,
+                                "src": "458:18:0",
+                                "stateVariable": false,
+                                "storageLocation": "default",
+                                "typeDescriptions": {
+                                    "typeIdentifier": "t_string_storage_ptr",
+                                    "typeString": "string"
+                                },
+                                "typeName": {
+                                    "id": 12,
+                                    "name": "string",
+                                    "nodeType": "ElementaryTypeName",
+                                    "src": "458:6:0",
+                                    "typeDescriptions": {
+                                        "typeIdentifier": "t_string_storage_ptr",
+                                        "typeString": "string"
+                                    }
+                                },
+                                "visibility": "internal"
+                            },
+                            {
+                                "constant": false,
+                                "id": 15,
+                                "mutability": "mutable",
+                                "name": "voteCount",
+                                "nameLocation": "492:9:0",
+                                "nodeType": "VariableDeclaration",
+                                "scope": 16,
+                                "src": "487:14:0",
+                                "stateVariable": false,
+                                "storageLocation": "default",
+                                "typeDescriptions": {
+                                    "typeIdentifier": "t_uint256",
+                                    "typeString": "uint256"
+                                },
+                                "typeName": {
+                                    "id": 14,
+                                    "name": "uint",
+                                    "nodeType": "ElementaryTypeName",
+                                    "src": "487:4:0",
+                                    "typeDescriptions": {
+                                        "typeIdentifier": "t_uint256",
+                                        "typeString": "uint256"
+                                    }
+                                },
+                                "visibility": "internal"
+                            }
+                        ],
+                        "name": "Proposal",
+                        "nameLocation": "438:8:0",
+                        "nodeType": "StructDefinition",
+                        "scope": 26,
+                        "src": "431:78:0",
+                        "visibility": "public"
+                    },
+                    {
+                        "canonicalName": "Voting.WorkflowStatus",
+                        "id": 23,
+                        "members": [
+                            {
+                                "id": 17,
+                                "name": "RegisteringVoters",
+                                "nameLocation": "608:17:0",
+                                "nodeType": "EnumValue",
+                                "src": "608:17:0"
+                            },
+                            {
+                                "id": 18,
+                                "name": "ProposalsRegistrationStarted",
+                                "nameLocation": "636:28:0",
+                                "nodeType": "EnumValue",
+                                "src": "636:28:0"
+                            },
+                            {
+                                "id": 19,
+                                "name": "ProposalsRegistrationEnded",
+                                "nameLocation": "675:26:0",
+                                "nodeType": "EnumValue",
+                                "src": "675:26:0"
+                            },
+                            {
+                                "id": 20,
+                                "name": "VotingSessionStarted",
+                                "nameLocation": "712:20:0",
+                                "nodeType": "EnumValue",
+                                "src": "712:20:0"
+                            },
+                            {
+                                "id": 21,
+                                "name": "VotingSessionEnded",
+                                "nameLocation": "743:18:0",
+                                "nodeType": "EnumValue",
+                                "src": "743:18:0"
+                            },
+                            {
+                                "id": 22,
+                                "name": "VotesTallied",
+                                "nameLocation": "772:12:0",
+                                "nodeType": "EnumValue",
+                                "src": "772:12:0"
+                            }
+                        ],
+                        "name": "WorkflowStatus",
+                        "nameLocation": "582:14:0",
+                        "nodeType": "EnumDefinition",
+                        "src": "577:214:0"
+                    },
+                    {
+                        "constant": false,
+                        "functionSelector": "c64963c5",
+                        "id": 25,
+                        "mutability": "mutable",
+                        "name": "winningProposalId",
+                        "nameLocation": "811:17:0",
+                        "nodeType": "VariableDeclaration",
+                        "scope": 26,
+                        "src": "799:29:0",
+                        "stateVariable": true,
+                        "storageLocation": "default",
+                        "typeDescriptions": {
+                            "typeIdentifier": "t_uint256",
+                            "typeString": "uint256"
+                        },
+                        "typeName": {
+                            "id": 24,
+                            "name": "uint",
+                            "nodeType": "ElementaryTypeName",
+                            "src": "799:4:0",
+                            "typeDescriptions": {
+                                "typeIdentifier": "t_uint256",
+                                "typeString": "uint256"
+                            }
+                        },
+                        "visibility": "public"
+                    }
+                ],
+                "scope": 27,
+                "src": "242:592:0",
+                "usedErrors": []
+            }
+        ],
+        "src": "37:797:0"
+    },
+    "functionHashes": {
+        "owner()": "8da5cb5b",
+        "renounceOwnership()": "715018a6",
+        "transferOwnership(address)": "f2fde38b",
+        "winningProposalId()": "c64963c5"
+    },
+    "gasEstimates": {
+        "creation": {
+            "codeDepositCost": "116600",
+            "executionCost": "26006",
+            "totalCost": "142606"
+        },
+        "external": {
+            "owner()": "2290",
+            "renounceOwnership()": "infinite",
+            "transferOwnership(address)": "28342",
+            "winningProposalId()": "2317"
+        }
+    }
+}
