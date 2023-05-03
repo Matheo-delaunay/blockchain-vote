@@ -72,6 +72,11 @@ contract Voting is Ownable {
         _;
     }
 
+    modifier onlyDuringProposalsRegistration() {
+    require(currentWorkflowStatus == WorkflowStatus.ProposalsRegistrationStarted, "Proposals registration is not active.");
+    _;
+}
+
     // Fonctions d'administration
 
     function registerVoters(address[] memory _voters) public onlyAdmin {
@@ -105,6 +110,36 @@ contract Voting is Ownable {
         require(currentWorkflowStatus == WorkflowStatus.VotingSessionStarted, "Cannot end voting session at this time.");
         currentWorkflowStatus = WorkflowStatus.VotingSessionEnded;
         emit WorkflowStatusChange(WorkflowStatus.VotingSessionStarted, currentWorkflowStatus);
+    }
+
+    function registerProposal(string memory _description) public onlyRegisteredVoter onlyDuringProposalsRegistration {
+        proposals.push(Proposal({
+            description: _description,
+            voteCount: 0
+        }));
+        emit ProposalRegistered(proposals.length - 1);
+    }
+
+    function vote(uint _proposalId) public onlyRegisteredVoter onlyDuringVotingSession {
+        Voter storage voter = voters[msg.sender];
+        require(!voter.hasVoted, "You have already voted.");
+        voter.hasVoted = true;
+        voter.votedProposalId = _proposalId;
+        proposals[_proposalId].voteCount++;
+        emit Voted(msg.sender, _proposalId);
+    }
+
+    function tallyVotes() public onlyAdmin onlyAfterVotingSessionEnded {
+        uint winningVoteCount = 0;
+        uint winningProposalIndex = 0;
+        for (uint i = 0; i < proposals.length; i++) {
+            if (proposals[i].voteCount > winningVoteCount) {
+                winningVoteCount = proposals[i].voteCount;
+                winningProposalIndex = i;
+            }
+        }
+        winningProposalId = winningProposalIndex;
+        currentWorkflowStatus = WorkflowStatus.VotesTallied;
     }
 
 }
