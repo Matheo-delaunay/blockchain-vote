@@ -153,14 +153,18 @@ contract Voting is Ownable {
     }
 
     function tallyVotes() public onlyAdmin onlyAfterVotingSessionEnded {
+        // Initialise le compteur de votes gagnants à zéro et l'indice de la proposition gagnante à zéro
         uint winningVoteCount = 0;
         uint winningProposalIndex = 0;
+        // Parcourt toutes les propositions enregistrées
         for (uint i = 0; i < proposals.length; i++) {
+            // Si le nombre de votes pour la proposition actuelle est supérieur au nombre de votes gagnants, alors la proposition actuelle devient la proposition gagnante
             if (proposals[i].voteCount > winningVoteCount) {
                 winningVoteCount = proposals[i].voteCount;
                 winningProposalIndex = i;
             }
         }
+        // Enregistre l'ID de la proposition gagnante et met à jour le statut de workflow
         winningProposalId = winningProposalIndex;
         currentWorkflowStatus = WorkflowStatus.VotesTallied;
     }
