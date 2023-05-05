@@ -2,6 +2,7 @@
 import Voting from '../../../back/build/contracts/Voting.json'
 import {onMounted} from "vue";
 import getWeb3 from './assets/getWeb3.js'
+import VotingComponent from "@/components/VotingComponent.vue";
 
 let web3var = null
 let accountsvar = null
@@ -52,12 +53,14 @@ onMounted(async () => {
         )
         console.error(error)
     }
-
 })
+
 
 </script>
 
 <template>
+  <VotingComponent/>
+
 </template>
 
 
