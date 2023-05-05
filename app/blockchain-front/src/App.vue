@@ -2,13 +2,20 @@
 import Voting from '../../../back/build/contracts/Voting.json'
 import {onMounted} from "vue";
 import getWeb3 from './assets/getWeb3.js'
-import VotingComponent from "@/components/VotingComponent.vue";
+import InputWhiteList from "@/components/admin/InputWhiteList.vue";
+import ShowProposal from "@/components/admin/ShowProposal.vue";
+import StartVote from "@/components/admin/StartVote.vue";
+import FinishVote from "@/components/admin/FinishVote.vue";
+import TallyVote from "@/components/admin/TallyVote.vue";
+import AddProposal from "@/components/user/AddProposal.vue";
+
 
 let web3var = null
 let accountsvar = null
 let contractvar = null
 let userAddressvar = null
 let isOwnervar = false
+
 
 
 onMounted(async () => {
@@ -35,9 +42,7 @@ onMounted(async () => {
         web3var = web3
         accountsvar = accounts
         contractvar = instance
-
         let account = accountsvar[0]
-
         userAddressvar = account.slice(0, 6) + "..." + account.slice(38, 42)
 
         // Check if the user is the owner
@@ -45,7 +50,6 @@ onMounted(async () => {
         if (account === owner) {
             isOwnervar = true
         }
-
     } catch (error) {
         // Catch any errors for any of the above operations.
         alert(
@@ -54,14 +58,24 @@ onMounted(async () => {
         console.error(error)
     }
 })
+let show = null
+const active = ()=>{
+    show = contractvar
+    contractvar.methods.test().call().then((result)=>console.log(result))
+}
+const startProposal = () => {
 
+}
 
 </script>
 
 <template>
-  <VotingComponent/>
-  <h3>BONJOUR</h3>
-
+    <input-white-list @startVote="startProposal"></input-white-list>
+    <show-proposal></show-proposal>
+    <start-vote></start-vote>
+    <finish-vote></finish-vote>
+    <tally-vote></tally-vote>
+    <add-proposal></add-proposal>
 </template>
 
 
