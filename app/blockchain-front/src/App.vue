@@ -60,6 +60,7 @@ onMounted(async () => {
 
 <template>
   <VotingComponent/>
+  <h3>BONJOUR</h3>
 
 </template>
 

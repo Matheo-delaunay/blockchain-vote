@@ -7,8 +7,6 @@ const contractAddress = "0xffcC7045eec3EdEb361E3AaDD93F66655b0e5E62"
 console.log(abi.abi)
 const contract = new web3.eth.Contract(abi.abi, contractAddress);
 console.log(contract)
-
-contract.methods.startVotingSession().send({from: '0x0E1570Cf1d65897745f05545f32A450f9B75404F'}).then((result: any) => console.log(result))
 </script>
 
 <template>
