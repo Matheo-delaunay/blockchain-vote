@@ -74,7 +74,7 @@ contract Voting is Ownable {
 
     // Fonctions d'administration
 
-    function registerVoters(address[] _voters) public onlyOwner {
+    function registerVoters(address[] memory _voters) public onlyOwner {
         // Vérifie que l'état courant du workflow est en cours d'inscription des électeurs.
         require(currentWorkflowStatus == WorkflowStatus.RegisteringVoters, "Cannot register voters at this time.");
         // Boucle sur la liste des adresses d'électeurs fournie et vérifie que chaque électeur n'est pas déjà enregistré.
@@ -123,7 +123,7 @@ contract Voting is Ownable {
         emit WorkflowStatusChange(WorkflowStatus.VotingSessionStarted, currentWorkflowStatus);
     }
 
-    function registerProposal(string _description) public onlyRegisteredVoter onlyDuringProposalsRegistration {
+    function registerProposal(string memory _description) public onlyRegisteredVoter onlyDuringProposalsRegistration {
         // La fonction permet à un électeur enregistré de proposer une nouvelle proposition pendant la période d'enregistrement des propositions.
         proposals.push(Proposal({
             description: _description,
@@ -147,7 +147,7 @@ contract Voting is Ownable {
         emit Voted(msg.sender, _proposalId);
     }
 
-    function tallyVotes() public onlyAdmin onlyAfterVotingSessionEnded {
+    function tallyVotes() public onlyOwner onlyAfterVotingSessionEnded {
         // Initialise le compteur de votes gagnants à zéro et l'indice de la proposition gagnante à zéro
         uint winningVoteCount = 0;
         uint winningProposalIndex = 0;
