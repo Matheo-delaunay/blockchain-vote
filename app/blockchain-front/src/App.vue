@@ -59,7 +59,7 @@ onMounted(async () => {
 </script>
 
 <template>
-  <navbar></navbar>
+  <navbar :userAddress="userAddressvar"></navbar>
   <VotingComponent/>
   <h3>BONJOUR</h3>
 
