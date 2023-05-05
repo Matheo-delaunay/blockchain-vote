@@ -59,15 +59,16 @@ const active = ()=>{
     show = contractvar
     contractvar.methods.test().call().then((result)=>console.log(result))
 }
-
+const startVote = () => {
+    contractvar.methods.start
+}
 
 </script>
 
 <template>
   <VotingComponent/>
-    <input-white-list></input-white-list>
-    <button v-on:click="active">test</button>
-  <p>{{ show }}</p>
+    <input-white-list @startVote="startVote"></input-white-list>
+
 
 </template>
 
