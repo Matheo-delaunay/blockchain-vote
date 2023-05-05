@@ -2,6 +2,7 @@
 import Voting from '../../../back/build/contracts/Voting.json'
 import {onMounted} from "vue";
 import getWeb3 from './assets/getWeb3.js'
+import Navbar from "@/components/Navbar.vue";
 import VotingComponent from "@/components/VotingComponent.vue";
 
 let web3var = null
@@ -55,10 +56,10 @@ onMounted(async () => {
     }
 })
 
-
 </script>
 
 <template>
+  <navbar></navbar>
   <VotingComponent/>
   <h3>BONJOUR</h3>
 
