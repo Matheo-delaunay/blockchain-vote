@@ -3,7 +3,7 @@ import Voting from '../../../back/build/contracts/Voting.json'
 import {onMounted, reactive, ref} from "vue";
 import getWeb3 from './assets/getWeb3.js'
 import VotingComponent from "@/components/VotingComponent.vue";
-import InputWhiteList from "@/components/WhiteList/InputWhiteList.vue";
+import InputWhiteList from "@/components/InputWhiteList.vue";
 
 
 let web3var = null
