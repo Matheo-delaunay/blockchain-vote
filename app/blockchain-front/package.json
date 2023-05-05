@@ -10,6 +10,11 @@
     "type-check": "vue-tsc --noEmit"
   },
   "dependencies": {
+    "bootstrap": "^5.2.3",
+    "fs": "^0.0.1-security",
+    "jquery": "^3.6.4",
+    "popper": "^1.0.1",
+    "tailwind": "^4.0.0",
     "truffle-contract": "^4.0.31",
     "vue": "^3.2.47",
     "web3": "^1.9.0"

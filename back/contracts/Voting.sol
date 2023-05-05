@@ -163,5 +163,8 @@ contract Voting is Ownable {
         winningProposalId = winningProposalIndex;
         currentWorkflowStatus = WorkflowStatus.VotesTallied;
     }
+    function test() public pure returns(uint) {
+        return 1;
+    }
 
 }

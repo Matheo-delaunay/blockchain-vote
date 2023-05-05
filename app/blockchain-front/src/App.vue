@@ -1,47 +1,83 @@
 <script setup lang="ts">
-import HelloWorld from './components/HelloWorld.vue'
-import TheWelcome from './components/TheWelcome.vue'
+import Voting from '../../../back/build/contracts/Voting.json'
+import {onMounted} from "vue";
+import getWeb3 from './assets/getWeb3.js'
+import InputWhiteList from "@/components/admin/InputWhiteList.vue";
+import ShowProposal from "@/components/admin/ShowProposal.vue";
+import StartVote from "@/components/admin/StartVote.vue";
+import FinishVote from "@/components/admin/FinishVote.vue";
+import TallyVote from "@/components/admin/TallyVote.vue";
+import AddProposal from "@/components/user/AddProposal.vue";
+
+
+let web3var = null
+let accountsvar = null
+let contractvar = null
+let userAddressvar = null
+let isOwnervar = false
+
+
+
+onMounted(async () => {
+    try {
+        // Get network provider and web3 instance.
+        const web3 = await getWeb3()
+
+        // Use web3 to get the user's accounts.
+        /* on récupère le tableau des comptes sur le metamask du user */
+        const accounts = await web3.eth.getAccounts()
+
+        // Get the contract instance.
+        const networkId = await web3.eth.net.getId()
+        const deployedNetwork = Voting.networks[networkId]
+        console.log("deployedNetwork", deployedNetwork)
+        /* Création de l'objet de contrat avec l'abi, le deployedNetwork et son address  */
+        const instance = new web3.eth.Contract(
+            Voting.abi,
+            deployedNetwork && deployedNetwork.address
+        )
+
+        // Set web3, accounts, and contract to the state, and then proceed with an
+        // example of interacting with the contract's methods.
+        web3var = web3
+        accountsvar = accounts
+        contractvar = instance
+        let account = accountsvar[0]
+        userAddressvar = account.slice(0, 6) + "..." + account.slice(38, 42)
+
+        // Check if the user is the owner
+        const owner = await instance.methods.owner().call()
+        if (account === owner) {
+            isOwnervar = true
+        }
+    } catch (error) {
+        // Catch any errors for any of the above operations.
+        alert(
+            `Failed to load web3, accounts, or contract. Check console for details.`
+        )
+        console.error(error)
+    }
+})
+let show = null
+const active = ()=>{
+    show = contractvar
+    contractvar.methods.test().call().then((result)=>console.log(result))
+}
+const startProposal = () => {
+
+}
+
 </script>
 
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-    </div>
-  </header>
-
-  <main>
-    <TheWelcome />
-  </main>
+    <input-white-list @startVote="startProposal"></input-white-list>
+    <show-proposal></show-proposal>
+    <start-vote></start-vote>
+    <finish-vote></finish-vote>
+    <tally-vote></tally-vote>
+    <add-proposal></add-proposal>
 </template>
 
+
 <style scoped>
-header {
-  line-height: 1.5;
-}
-
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-}
 </style>
