@@ -29,7 +29,7 @@ contract Voting is Ownable {
         VotesTallied
     }
 
-    uint public winningProposalId;
+    uint winningProposalId;
 
     // Événements
     
@@ -46,11 +46,6 @@ contract Voting is Ownable {
     address public admin;
 
     // Modificateurs
-
-    modifier onlyAdmin() {
-        require(msg.sender == admin, "Only the admin can call this function.");
-        _;
-    }
 
     modifier onlyRegisteredVoter() {
         require(voters[msg.sender].isRegistered, "You are not registered to vote.");
@@ -79,7 +74,7 @@ contract Voting is Ownable {
 
     // Fonctions d'administration
 
-    function registerVoters(address[] memory _voters) public onlyAdmin {
+    function registerVoters(address[] _voters) public onlyOwner {
         // Vérifie que l'état courant du workflow est en cours d'inscription des électeurs.
         require(currentWorkflowStatus == WorkflowStatus.RegisteringVoters, "Cannot register voters at this time.");
         // Boucle sur la liste des adresses d'électeurs fournie et vérifie que chaque électeur n'est pas déjà enregistré.
@@ -92,7 +87,7 @@ contract Voting is Ownable {
         }
     }
 
-    function startProposalsRegistration() public onlyAdmin {
+    function startProposalsRegistration() public onlyOwner {
         // Vérifie que l'état courant du workflow est en cours d'inscription des électeurs.
         require(currentWorkflowStatus == WorkflowStatus.RegisteringVoters, "Cannot start proposals registration at this time.");
         // Modifie l'état courant du workflow pour indiquer que l'inscription des propositions a commencé.
@@ -101,7 +96,7 @@ contract Voting is Ownable {
         emit WorkflowStatusChange(WorkflowStatus.RegisteringVoters, currentWorkflowStatus);
     }
 
-    function endProposalsRegistration() public onlyAdmin {
+    function endProposalsRegistration() public onlyOwner {
         // Vérifie que l'état courant du workflow est en cours d'inscription des propositions.
         require(currentWorkflowStatus == WorkflowStatus.ProposalsRegistrationStarted, "Cannot end proposals registration at this time.");
         // Modifie l'état courant du workflow pour indiquer que l'inscription des propositions est terminée.
@@ -110,7 +105,7 @@ contract Voting is Ownable {
         emit WorkflowStatusChange(WorkflowStatus.ProposalsRegistrationStarted, currentWorkflowStatus);
     }
 
-    function startVotingSession() public onlyAdmin {
+    function startVotingSession() public onlyOwner {
         // Vérifie que l'état courant du workflow est l'inscription des propositions terminée.
         require(currentWorkflowStatus == WorkflowStatus.ProposalsRegistrationEnded, "Cannot start voting session at this time.");
         // Modifie l'état courant du workflow pour indiquer que la session de vote a commencé.
@@ -119,7 +114,7 @@ contract Voting is Ownable {
         emit WorkflowStatusChange(WorkflowStatus.ProposalsRegistrationEnded, currentWorkflowStatus);
     }
 
-    function endVotingSession() public onlyAdmin {
+    function endVotingSession() public onlyOwner {
         // Vérifie que l'état courant du workflow est la session de vote en cours.
         require(currentWorkflowStatus == WorkflowStatus.VotingSessionStarted, "Cannot end voting session at this time.");
         // Modifie l'état courant du workflow pour indiquer que la session de vote est terminée.
@@ -128,7 +123,7 @@ contract Voting is Ownable {
         emit WorkflowStatusChange(WorkflowStatus.VotingSessionStarted, currentWorkflowStatus);
     }
 
-    function registerProposal(string memory _description) public onlyRegisteredVoter onlyDuringProposalsRegistration {
+    function registerProposal(string _description) public onlyRegisteredVoter onlyDuringProposalsRegistration {
         // La fonction permet à un électeur enregistré de proposer une nouvelle proposition pendant la période d'enregistrement des propositions.
         proposals.push(Proposal({
             description: _description,
