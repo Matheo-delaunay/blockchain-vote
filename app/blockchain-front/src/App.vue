@@ -4,7 +4,8 @@ import {onMounted} from "vue";
 import getWeb3 from './assets/getWeb3.js'
 import Navbar from "@/components/Navbar.vue";
 import VotingComponent from "@/components/VotingComponent.vue";
-
+import "bootstrap/dist/css/bootstrap.css";
+import "bootstrap/dist/js/bootstrap.js";
 let web3var = null
 let accountsvar = null
 let contractvar = null
