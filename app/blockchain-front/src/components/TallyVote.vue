@@ -1,5 +1,7 @@
 <script setup lang="ts">
+const tallyVote = () => {
 
+}
 </script>
 
 <template>
