@@ -60,13 +60,14 @@ onMounted(async () => {
     }
 })
 const startProposal = (reactiveData:string[]) => {
-    contractvar.value.methods.registerVoters(reactiveData).send({from: accountsvar.value[0]}).then((result)=>console.log(result))
-    contractvar.value.methods.startProposalsRegistration().send({from: accountsvar.value[0]}).then((result)=>console.log(result))
+    contractvar.value.methods.proposals().call((err,res)=>{console.log(res)}).then((result)=>console.log(result))
+    //contractvar.value.methods.registerVoters(reactiveData).send({from: accountsvar.value[0]}).then((result)=>console.log(result))
+    //contractvar.value.methods.startProposalsRegistration().send({from: accountsvar.value[0]}).then((result)=>console.log(result))
 
 }
 
-const startVote = () => {
-
+const endProposal = () => {
+    contractvar.value.methods.endProposalsRegistration().send({from: accountsvar.value[0]}).then((result)=>console.log(result))
 }
 
 </script>
