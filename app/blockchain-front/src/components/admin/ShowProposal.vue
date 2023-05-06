@@ -9,7 +9,7 @@ const finishProposal = () => {
 
 <template>
     <div class="container">
-        <div class="row my-5">
+        <div class="row my-4">
             <ul class="list-group">
                 <li class="list-group-item">test1</li>
                 <li class="list-group-item">test2</li>
