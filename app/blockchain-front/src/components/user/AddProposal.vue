@@ -13,7 +13,7 @@ const props = defineProps<{
 </script>
 
 <template>
-    <div class="container">
+    <div class="container py-2">
         <div class="row my-4">
             <div class="col-8">
                 <label for="addedProposal" class="form-label">Make a proposal</label>
