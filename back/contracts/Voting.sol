@@ -72,6 +72,10 @@ contract Voting is Ownable {
         _;
     }
 
+    function getProposalsLength() public view returns (uint){
+        return proposals.length;
+    }
+
     // Fonctions d'administration
 
     function registerVoters(address[] memory _voters) public onlyOwner {

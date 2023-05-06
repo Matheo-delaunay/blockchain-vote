@@ -5,6 +5,10 @@ import "bootstrap/dist/js/bootstrap.js";
 const finishProposal = () => {
 
 }
+
+const emit = defineEmits<{
+    (e:'endProposal'):void
+}>()
 </script>
 
 <template>

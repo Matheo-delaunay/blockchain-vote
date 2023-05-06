@@ -59,25 +59,39 @@ onMounted(async () => {
         console.error(error)
     }
 })
-let show = null
-const active = ()=>{
-    show = contractvar
-    contractvar.value.methods.test().call().then((result)=>console.log(result))
-}
-const startProposal = () => {
+const temp = []
+const startProposal = (reactiveData:string[]) => {
 
+    contractvar.value.methods.getProposalsLength().call((err, res) => {
+        for (let i = 0; i<res; i++){
+            contractvar.value.methods.proposals[i].call((err1, res1) => {
+                temp.push(res1)
+            })
+        }
+    }).then((result)=>console.log(result))
+    //contractvar.value.methods.registerVoters(reactiveData).send({from: accountsvar.value[0]}).then((result)=>console.log(result))
+    //contractvar.value.methods.startProposalsRegistration().send({from: accountsvar.value[0]}).then((result)=>console.log(result))
+
+}
+
+const endProposal = () => {
+    contractvar.value.methods.endProposalsRegistration().send({from: accountsvar.value[0]}).then((result)=>console.log(result))
+}
+
+const makeProposal = (data) => {
+    contractvar.value.methods.registerProposal(string)().send({from: accountsvar.value[0]}).then((result)=>console.log(result))
 }
 
 </script>
 
 <template>
     <navbar :useradress="userAddressvar"></navbar>
-    <input-white-list @startVote="startProposal"></input-white-list>
-    <show-proposal></show-proposal>
+    <input-white-list @startProposal="startProposal"></input-white-list>
+    <show-proposal @endProposal="endProposal"></show-proposal>
     <start-vote></start-vote>
     <finish-vote></finish-vote>
     <tally-vote></tally-vote>
-    <add-proposal></add-proposal>
+    <add-proposal :contract="contractvar" :account="accountsvar"></add-proposal>
 </template>
 
 
