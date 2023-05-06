@@ -10,6 +10,9 @@ module.exports = {
     solc: {
       version: "0.8.4"
     }
+  },
+  solidityLog: {
+    displayPrefix: ' :', // defaults to ""
   }
 };
 
