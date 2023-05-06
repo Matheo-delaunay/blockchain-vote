@@ -1,15 +1,16 @@
 <script setup lang="ts">
+import "bootstrap/dist/css/bootstrap.css";
+import "bootstrap/dist/js/bootstrap.js";
+
 
 const makeProposal = () => {
     const value = document.querySelector("#addedProposal").value
-    props.contract.methods.registerProposal(value).send({from: props.account[0]}).then((result)=>console.log(result))
-
+    emit("makeProposal", value)
 }
-
-const props = defineProps<{
-    contract:any,
-    account:any
+const emit = defineEmits<{
+    (e: 'makeProposal', value: string): void
 }>()
+
 </script>
 
 <template>
