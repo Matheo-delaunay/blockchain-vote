@@ -1,26 +1,28 @@
 <script setup lang="ts">
 
-import {reactive} from "vue";
+import {reactive, ref} from "vue";
 import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap/dist/js/bootstrap.js";
 
 
-const rowData: string[] = []
-const reactiveData = reactive(rowData)
+const reactiveData = ref([])
 const add = () => {
     const value = document.querySelector("#addedAddress").value
-    if (value != "" && !reactiveData.includes(value)) {
-        reactiveData.push(document.querySelector("#addedAddress").value)
+    if (value != "" && !reactiveData.value.includes(value)) {
+        reactiveData.value.push(document.querySelector("#addedAddress").value)
     }
 
 }
 
-const startProposal = () => {
-
+const emit = defineEmits<{
+    (e: 'startProposal', reactiveData:string[] ):void
+}>()
+const sendData = () => {
+    emit('startProposal', reactiveData.value)
 }
 
 function deleteRow(i) {
-    reactiveData.splice(i, 1)
+    reactiveData.value.splice(i, 1)
 }
 </script>
 
@@ -44,7 +46,7 @@ function deleteRow(i) {
             </table>
         </div>
         <div class="row justify-content-center">
-            <button class="btn btn-primary" v-on:click="startProposal">Start proposal session</button>
+            <button class="btn btn-primary" v-on:click="emit('startProposal', reactiveData)">Start proposal session</button>
         </div>
     </div>
 </template>

@@ -59,12 +59,13 @@ onMounted(async () => {
         console.error(error)
     }
 })
-let show = null
-const active = ()=>{
-    show = contractvar
-    contractvar.value.methods.test().call().then((result)=>console.log(result))
+const startProposal = (reactiveData:string[]) => {
+    contractvar.value.methods.registerVoters(reactiveData).send({from: accountsvar.value[0]}).then((result)=>console.log(result))
+    contractvar.value.methods.startProposalsRegistration().send({from: accountsvar.value[0]}).then((result)=>console.log(result))
+
 }
-const startProposal = () => {
+
+const startVote = () => {
 
 }
 
@@ -72,7 +73,7 @@ const startProposal = () => {
 
 <template>
     <navbar :useradress="userAddressvar"></navbar>
-    <input-white-list @startVote="startProposal"></input-white-list>
+    <input-white-list @startProposal="startProposal"></input-white-list>
     <show-proposal></show-proposal>
     <start-vote></start-vote>
     <finish-vote></finish-vote>
