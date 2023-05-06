@@ -17,3 +17,5 @@ Solidity: 0.8.4
 - Roxanne AL-ALI: Documentation, README redaction and reseach
 - Teo VANDROEMME: Backend Development 
   Using the Agile methodology, we divided tasks into cards using Trello. We then attributed each member in the group tasks. Everyone in the group was free to participate and contribute to a task by brainstorming ideas and collaborating together. 
+
+Demo : https://youtu.be/0TiJr8vgxCw
