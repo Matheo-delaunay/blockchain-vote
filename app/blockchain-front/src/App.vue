@@ -10,6 +10,7 @@ import TallyVote from "@/components/admin/TallyVote.vue";
 import AddProposal from "@/components/user/AddProposal.vue";
 import Navbar from "@/components/Navbar.vue";
 import ViewVotes from "@/components/user/ViewVotes.vue";
+import UserVote from "@/components/user/UserVote.vue";
 
 
 const web3var = ref(null)
@@ -17,7 +18,6 @@ const accountsvar = ref(null)
 const contractvar = ref(null)
 const userAddressvar = ref(null)
 const isOwnervar = ref(false)
-
 
 
 onMounted(async () => {
@@ -59,40 +59,59 @@ onMounted(async () => {
         console.error(error)
     }
 })
-const temp = []
-const startProposal = (reactiveData:string[]) => {
-
-    contractvar.value.methods.getProposalsLength().call((err, res) => {
-        for (let i = 0; i<res; i++){
-            contractvar.value.methods.proposals[i].call((err1, res1) => {
-                temp.push(res1)
-            })
-        }
-    }).then((result)=>console.log(result))
-    //contractvar.value.methods.registerVoters(reactiveData).send({from: accountsvar.value[0]}).then((result)=>console.log(result))
-    //contractvar.value.methods.startProposalsRegistration().send({from: accountsvar.value[0]}).then((result)=>console.log(result))
-
+const startProposal = (reactiveData: string[]) => {
+    contractvar.value.methods.registerVoters(reactiveData).send({from: accountsvar.value[0]})
+    contractvar.value.methods.startProposalsRegistration().send({from: accountsvar.value[0]})
 }
 
 const endProposal = () => {
-    contractvar.value.methods.endProposalsRegistration().send({from: accountsvar.value[0]}).then((result)=>console.log(result))
+    contractvar.value.methods.endProposalsRegistration().send({from: accountsvar.value[0]})
 }
 
-const makeProposal = (data) => {
-    contractvar.value.methods.registerProposal(string)().send({from: accountsvar.value[0]}).then((result)=>console.log(result))
+const makeProposal = (value: string) => {
+    contractvar.value.methods.registerProposal(value).send({from: accountsvar.value[0]})
+}
+
+const startVote = () => {
+    contractvar.value.methods.startVotingSession().send({from: accountsvar.value[0]})
+}
+
+const endVoting = () => {
+    contractvar.value.methods.endVotingSession().send({from: accountsvar.value[0]})
+}
+
+const tallyVote = () => {
+    contractvar.value.methods.tallyVotes().send({from: accountsvar.value[0]})
 }
 
 </script>
 
 <template>
     <navbar :userAddressvar="userAddressvar"></navbar>
-    <div v-if="isOwnervar" class="admin"><input-white-list @startVote="startProposal"></input-white-list></div>
-    <div v-if="isOwnervar" class="admin"><show-proposal></show-proposal></div>
-    <div v-if="isOwnervar" class="admin"><start-vote></start-vote></div>
-    <div v-if="isOwnervar" class="admin"><finish-vote></finish-vote></div>
-    <div v-if="!isOwnervar" class="user"><tally-vote></tally-vote></div>
-    <div v-if="!isOwnervar" class="user"><add-proposal></add-proposal></div>
-    <div v-if="!isOwnervar" class="user"><view-votes></view-votes></div>
+    <div v-if="isOwnervar">
+        <input-white-list @startProposal="startProposal"></input-white-list>
+    </div>
+    <div v-if="isOwnervar">
+        <show-proposal :contractvar="contractvar" @endProposal="endProposal"></show-proposal>
+    </div>
+    <div v-if="isOwnervar">
+        <start-vote @startVote="startVote"></start-vote>
+    </div>
+    <div v-if="isOwnervar">
+        <finish-vote @endVoting="endVoting"></finish-vote>
+    </div>
+    <div v-if="isOwnervar">
+        <tally-vote @tallyVote="tallyVote"></tally-vote>
+    </div>
+    <div v-if="isOwnervar">
+        <add-proposal @makeProposal="makeProposal"></add-proposal>
+    </div>
+    <div v-if="isOwnervar">
+        <user-vote :contractvar="contractvar" :accountsvar="accountsvar"></user-vote>
+    </div>
+    <div v-if="isOwnervar">
+        <view-votes :contractvar="contractvar"></view-votes>
+    </div>
 </template>
 
 
