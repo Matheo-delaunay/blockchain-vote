@@ -12,7 +12,7 @@ const emit = defineEmits<{
 </script>
 
 <template>
-    <div class="container">
+    <div class="container py-2">
         <div class="row my-4">
             <ul class="list-group">
                 <li class="list-group-item">test1</li>

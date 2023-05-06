@@ -5,7 +5,7 @@ const tallyVote = () => {
 </script>
 
 <template>
-    <div class="container">
+    <div class="container py-2">
         <div class="row justify-content-center">
             <button class="btn btn-primary" v-on:click="tallyVote">Tally votes</button>
         </div>

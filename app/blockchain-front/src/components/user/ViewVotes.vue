@@ -9,7 +9,7 @@ const reactiveData = reactive(rowData)
 </script>
 
 <template>
-    <div class="container">
+    <div class="container py-2">
         <div class="row">
             <table class="table" id="myTable">
                 <tr v-for="item in reactiveData">

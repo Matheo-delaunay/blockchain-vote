@@ -5,7 +5,7 @@ const endVoting = () => {
 </script>
 
 <template>
-    <div class="container">
+    <div class="container py-2">
         <div class="row justify-content-center">
             <button class="btn btn-primary" v-on:click="endVoting">End voting</button>
         </div>

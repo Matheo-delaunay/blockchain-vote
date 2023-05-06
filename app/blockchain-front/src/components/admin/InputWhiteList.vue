@@ -27,7 +27,7 @@ function deleteRow(i) {
 </script>
 
 <template>
-    <div class="container">
+    <div class="container py-2">
         <div class="row my-4">
             <div class="col-8">
                 <label for="addedAddress" class="form-label">Address to register</label>

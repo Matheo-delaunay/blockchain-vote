@@ -9,6 +9,7 @@ import FinishVote from "@/components/admin/FinishVote.vue";
 import TallyVote from "@/components/admin/TallyVote.vue";
 import AddProposal from "@/components/user/AddProposal.vue";
 import Navbar from "@/components/Navbar.vue";
+import ViewVotes from "@/components/user/ViewVotes.vue";
 
 
 const web3var = ref(null)
@@ -43,12 +44,11 @@ onMounted(async () => {
         web3var.value = web3
         accountsvar.value = accounts
         contractvar.value = instance
-        let account = accountsvar.value[0]
-        userAddressvar.value = account.slice(0, 6) + "..." + account.slice(38, 42)
+        userAddressvar.value = accountsvar.value[0]
 
         // Check if the user is the owner
         const owner = await instance.methods.owner().call()
-        if (account === owner) {
+        if (userAddressvar.value === owner) {
             isOwnervar.value = true
         }
     } catch (error) {
@@ -85,13 +85,14 @@ const makeProposal = (data) => {
 </script>
 
 <template>
-    <navbar :useradress="userAddressvar"></navbar>
-    <input-white-list @startProposal="startProposal"></input-white-list>
-    <show-proposal @endProposal="endProposal"></show-proposal>
-    <start-vote></start-vote>
-    <finish-vote></finish-vote>
-    <tally-vote></tally-vote>
-    <add-proposal :contract="contractvar" :account="accountsvar"></add-proposal>
+    <navbar :userAddressvar="userAddressvar"></navbar>
+    <div v-if="isOwnervar" class="admin"><input-white-list @startVote="startProposal"></input-white-list></div>
+    <div v-if="isOwnervar" class="admin"><show-proposal></show-proposal></div>
+    <div v-if="isOwnervar" class="admin"><start-vote></start-vote></div>
+    <div v-if="isOwnervar" class="admin"><finish-vote></finish-vote></div>
+    <div v-if="!isOwnervar" class="user"><tally-vote></tally-vote></div>
+    <div v-if="!isOwnervar" class="user"><add-proposal></add-proposal></div>
+    <div v-if="!isOwnervar" class="user"><view-votes></view-votes></div>
 </template>
 
 
